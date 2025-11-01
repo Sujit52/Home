@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SDK INTELLIGENCE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-container {
+            background: white;
+            padding: clamp(20px, 5vw, 40px);
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .logo p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: #666;
+            opacity: 0.9;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: clamp(15px, 4vw, 20px);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: clamp(16px, 4vw, 18px);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-btn:hover::before,
+        .nav-btn:active::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-icon {
+            font-size: clamp(20px, 5vw, 24px);
+            margin-right: 15px;
+            min-width: 30px;
+        }
+
+        .btn-text {
+            flex: 1;
+        }
+
+        .btn-arrow {
+            font-size: clamp(16px, 4vw, 18px);
+            opacity: 0.8;
+        }
+
+        /* Mobile-specific optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+            
+            .nav-container {
+                padding: 25px 20px;
+                border-radius: 15px;
+            }
+            
+            .nav-grid {
+                gap: 12px;
+            }
+            
+            .nav-btn {
+                padding: 18px 15px;
+            }
+            
+            .btn-icon {
+                margin-right: 12px;
+            }
+        }
+
+        /* Tablet and larger screens */
+        @media (min-width: 768px) {
+            .nav-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .nav-btn {
+                padding: 20px 25px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .nav-container {
+                padding: 20px 15px;
+            }
+            
+            .logo h1 {
+                font-size: 1.6rem;
+            }
+            
+            .nav-btn {
+                padding: 16px 12px;
+                font-size: 15px;
+            }
+            
+            .btn-icon {
+                margin-right: 10px;
+                font-size: 18px;
+            }
+        }
+
+        /* Landscape mode optimization */
+        @media (max-height: 500px) and (orientation: landscape) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+            
+            .nav-container {
+                max-width: 90%;
+            }
+            
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .logo {
+                margin-bottom: 20px;
+            }
+        }
+
+        /* High-resolution screens */
+        @media (min-resolution: 2dppx) {
+            .nav-btn {
+                border: 0.5px solid rgba(255,255,255,0.1);
+            }
+        }
+
+        /* Reduced motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .nav-btn {
+                transition: none;
+            }
+            
+            .nav-btn::before {
+                display: none;
+            }
+            
+            .nav-btn:hover {
+                transform: none;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .nav-container {
+                background: #1a1a1a;
+                color: white;
+            }
+            
+            .logo h1 {
+                color: white;
+            }
+            
+            .logo p {
+                color: #ccc;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        .nav-btn:focus {
+            outline: 3px solid rgba(102, 126, 234, 0.5);
+            outline-offset: 2px;
+        }
+
+        /* Loading state */
+        .nav-btn.loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        /* Success state animation */
+        .nav-btn.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-container">
+        <div class="logo">
+            <h1>🤖 SDK INTELLIGENCE</h1>
+            <p>Select One Service:</p>
+        </div>
+        
+        <div class="nav-grid">
+            <a href="/clg1.html" class="nav-btn">
+                <span class="btn-icon">📲</span>
+                <span class="btn-text">Mobile Number Information</span>
+                <span class="btn-arrow">→</span>
+            </a>
+            
+            <a href="/clg2.html" class="nav-btn">
+                <span class="btn-icon">🏍️</span>
+                <span class="btn-text">Vehicle Information</span>
+                <span class="btn-arrow">→</span>
+            </a>
+            
+            <a href="https://sdk-nine-psi.vercel.app/" class="nav-btn">
+                <span class="btn-icon">🏫</span>
+                <span class="btn-text">College Students Information</span>
+                <span class="btn-arrow">→</span>
+            </a>
+            
+            <a href="https://sdkmoviez4u.free.nf/?i=1" class="nav-btn">
+                <span class="btn-icon">🎬</span>
+                <span class="btn-text">Download Latest Movies</span>
+                <span class="btn-arrow">→</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced mobile experience
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            
+            // Add touch feedback
+            navButtons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(-1px)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                // Prevent zoom on double tap
+                
+
+            // Handle orientation changes
+            window.addEventListener('orientationchange', function() {
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                }, 100);
+            });
+
+            // Prevent pull-to-refresh on mobile
+            let touchStartY = 0;
+            
+            document.addEventListener('touchstart', function(e) {
+                touchStartY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            document.addEventListener('touchmove', function(e) {
+                const touchY = e.touches[0].clientY;
+                const diff = touchY - touchStartY;
+                
+                if (window.scrollY === 0 && diff > 0) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        });
+
+        // Service Worker for offline support (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker registration successful');
+                    })
+                    .catch(function(error) {
+                        console.log('ServiceWorker registration failed');
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
